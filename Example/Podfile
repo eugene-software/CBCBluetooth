@@ -1,0 +1,6 @@
+use_frameworks!
+target 'CBCBluetooth_Tests' do
+  pod 'CBCBluetooth', :path => '../'
+  
+  
+end
