@@ -4,7 +4,7 @@
 [![License](https://img.shields.io/cocoapods/l/CBCBluetooth.svg?style=flat)](https://cocoapods.org/pods/CBCBluetooth)
 [![Platform](https://img.shields.io/cocoapods/p/CBCBluetooth.svg?style=flat)](https://cocoapods.org/pods/CBCBluetooth)
 
-## Requirements
+## Requirements 
 
 - iOS 13 and above
 
