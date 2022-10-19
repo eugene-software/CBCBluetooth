@@ -1,6 +1,5 @@
 # CBCBluetooth
 
-[![CI Status](https://img.shields.io/travis/eugene-software/CBCBluetooth.svg?style=flat)](https://travis-ci.org/eugene-software/CBCBluetooth)
 [![Version](https://img.shields.io/cocoapods/v/CBCBluetooth.svg?style=flat)](https://cocoapods.org/pods/CBCBluetooth)
 [![License](https://img.shields.io/cocoapods/l/CBCBluetooth.svg?style=flat)](https://cocoapods.org/pods/CBCBluetooth)
 [![Platform](https://img.shields.io/cocoapods/p/CBCBluetooth.svg?style=flat)](https://cocoapods.org/pods/CBCBluetooth)
