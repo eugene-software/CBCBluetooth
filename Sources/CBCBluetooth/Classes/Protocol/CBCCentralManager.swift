@@ -59,10 +59,10 @@ public protocol CBCCentralManager {
     
     /// Starts scan for particular service UUIDs. `nil` can be passed to scan for all possible peripherals
     /// - Parameters:
-    ///   - serviceUUIDs: UUID string for particular services
+    ///   - serviceIds: ID string for particular services
     /// - Returns: Publisher that passes found `CBCPeripheral`
     ///
-    func startScan(with serviceUUIDs: [String]?) -> AnyPublisher<CBCPeripheral, CBCError>
+    func startScan(with serviceIds: [String]?) -> AnyPublisher<CBCPeripheral, CBCError>
     
     /// Stops scan process. Doesn't cancel publishers
     ///
@@ -70,7 +70,7 @@ public protocol CBCCentralManager {
     
     /// Immediately disconnects from all peripherals with particular services
     ///
-    func disconnectAllPeripherals(for services: [String])
+    func disconnectAllPeripherals(for serviceIds: [String])
     
     /// Returns all cached peripherals with particular UUIDs
     /// - Parameters:
@@ -81,14 +81,14 @@ public protocol CBCCentralManager {
     
     /// Returns connected by iOS system cached peripherals with particular UUIDs
     /// - Parameters:
-    ///   - uuids: UUIDs of peripherals
+    ///   - serviceIds: IDs of services to filter
     /// - Returns: Publisher that passes found `CBCPeripheral`
     ///
-    func getConnectedPeripherals(with serviceUUIDs: [String]) -> AnyPublisher<CBCPeripheral, CBCError>
+    func getConnectedPeripherals(with serviceIds: [String]) -> AnyPublisher<CBCPeripheral, CBCError>
     
-    /// When application launches, it can restore connection of peripherals by itself, and the app can handle them bu this methhod
+    /// When application launches, it can restore connection of peripherals by itself, and the app can handle them by this methhod
     /// - Parameters:
-    ///   - uuid: UUID of restorable
+    ///   - uuid: UUID of restorable peripheral
     /// - Returns: Publisher that passes found `CBCPeripheral`
     ///
     func observeWillRestoreState(for uuid: UUID) -> AnyPublisher<CBCPeripheral, Never>

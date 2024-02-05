@@ -115,12 +115,12 @@ extension CoreBluetoothPeripheral: CBCPeripheral {
             .eraseToAnyPublisher()
     }
     
-    func discoverServices(with uuids: [String]?) -> AnyPublisher<CBCService, CBCError> {
+    func discoverServices(with serviceIds: [String]?) -> AnyPublisher<CBCService, CBCError> {
         
         let subject = PassthroughSubject<CBCService, CBCError>()
-        let cbuuids: [CBUUID] = uuids?.map { CBUUID(string: $0) } ?? []
+        let cbuuids: [CBUUID] = serviceIds?.map { CBUUID(string: $0) } ?? []
         
-        if let publisher = discoveredServicesPublisher(for: peripheral, with: uuids) {
+        if let publisher = discoveredServicesPublisher(for: peripheral, with: serviceIds) {
             return publisher
         }
 

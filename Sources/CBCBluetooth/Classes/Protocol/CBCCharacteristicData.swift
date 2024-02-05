@@ -14,7 +14,7 @@ public protocol CBCCharacteristicData {
     ///
     var data: Data { get }
     
-    /// Characteristic UUID string
+    /// Characteristic ID string
     ///
     var identifier: String { get }
     

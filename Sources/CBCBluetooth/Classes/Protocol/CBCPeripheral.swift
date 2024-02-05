@@ -39,10 +39,10 @@ public protocol CBCPeripheral {
     
     /// Starts discovering particular service UUIDs. `nil` can be passed to discovering all possible services
     /// - Parameters:
-    ///   - uuids: UUID strings for particular services
+    ///   - serviceIds: ID strings for particular services
     /// - Returns: Publisher that passes found `CBCService`
     ///
-    func discoverServices(with uuids: [String]?) -> AnyPublisher<CBCService, CBCError>
+    func discoverServices(with serviceIds: [String]?) -> AnyPublisher<CBCService, CBCError>
     
     /// Starts observing RSSI of peripheral.
     /// - Parameters:

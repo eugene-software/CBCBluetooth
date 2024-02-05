@@ -13,7 +13,7 @@ import Combine
 ///
 public protocol CBCCharacteristic {
     
-    /// Unique UUID string of characteristic
+    /// Unique ID string of characteristic
     ///
     var identifier: String { get }
     

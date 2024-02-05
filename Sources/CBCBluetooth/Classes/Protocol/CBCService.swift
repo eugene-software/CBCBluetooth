@@ -13,8 +13,8 @@ public protocol CBCService {
     
     /// Starts discovering particular characteristics UUIDs. `nil` can be passed to discovering all possible characteristics
     /// - Parameters:
-    ///   - uuids: UUID strings for particular characteristics
+    ///   - characteristicsIds: ID strings for particular characteristics
     /// - Returns: Publisher that passes found `CBCCharacteristic`
     ///
-    func discoverCharacteristics(with uuids: [String]?) -> AnyPublisher<CBCCharacteristic, CBCError>
+    func discoverCharacteristics(with characteristicsIds: [String]?) -> AnyPublisher<CBCCharacteristic, CBCError>
 }
