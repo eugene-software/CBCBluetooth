@@ -24,8 +24,8 @@ import CBCBluetooth
 
 let manager = CBCCentralManagerFactory.create()
 
-let service = "SOME-SERVICE-UUID-STRING"
-let characteristic = "SOME-CHARACTERISTIC-UUID-STRING"
+let service = UUID(uuidString:"SOME-SERVICE-UUID-STRING")
+let characteristic = UUID(uuidString:"SOME-CHARACTERISTIC-UUID-STRING")
 
 manager.startScan(with: [service])
     .flatMap {
