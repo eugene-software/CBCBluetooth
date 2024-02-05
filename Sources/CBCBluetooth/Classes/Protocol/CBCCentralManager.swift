@@ -62,7 +62,7 @@ public protocol CBCCentralManager {
     ///   - serviceUUIDs: UUID string for particular services
     /// - Returns: Publisher that passes found `CBCPeripheral`
     ///
-    func startScan(with serviceUUIDs: [String]?) -> AnyPublisher<CBCPeripheral, CBCError>
+    func startScan(with serviceUUIDs: [UUID]?) -> AnyPublisher<CBCPeripheral, CBCError>
     
     /// Stops scan process. Doesn't cancel publishers
     ///
@@ -70,7 +70,7 @@ public protocol CBCCentralManager {
     
     /// Immediately disconnects from all peripherals with particular services
     ///
-    func disconnectAllPeripherals(for services: [String])
+    func disconnectAllPeripherals(for services: [UUID])
     
     /// Returns all cached peripherals with particular UUIDs
     /// - Parameters:
@@ -84,7 +84,7 @@ public protocol CBCCentralManager {
     ///   - uuids: UUIDs of peripherals
     /// - Returns: Publisher that passes found `CBCPeripheral`
     ///
-    func getConnectedPeripherals(with serviceUUIDs: [String]) -> AnyPublisher<CBCPeripheral, CBCError>
+    func getConnectedPeripherals(with serviceUUIDs: [UUID]) -> AnyPublisher<CBCPeripheral, CBCError>
     
     /// When application launches, it can restore connection of peripherals by itself, and the app can handle them bu this methhod
     /// - Parameters:

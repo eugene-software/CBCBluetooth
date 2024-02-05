@@ -42,7 +42,7 @@ public protocol CBCPeripheral {
     ///   - uuids: UUID strings for particular services
     /// - Returns: Publisher that passes found `CBCService`
     ///
-    func discoverServices(with uuids: [String]?) -> AnyPublisher<CBCService, CBCError>
+    func discoverServices(with uuids: [UUID]?) -> AnyPublisher<CBCService, CBCError>
     
     /// Starts observing RSSI of peripheral.
     /// - Parameters:

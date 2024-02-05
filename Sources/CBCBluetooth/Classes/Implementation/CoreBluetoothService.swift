@@ -21,7 +21,7 @@ struct CoreBluetoothService: CBCService {
        self.peripheral = peripheral
     }
     
-    func discoverCharacteristics(with uuids: [String]?) -> AnyPublisher<CBCCharacteristic, CBCError> {
+    func discoverCharacteristics(with uuids: [UUID]?) -> AnyPublisher<CBCCharacteristic, CBCError> {
         return peripheral.discoverCharacteristics(with: uuids, for: service)
     }
 }

@@ -15,7 +15,7 @@ public protocol CBCCharacteristic {
     
     /// Unique UUID string of characteristic
     ///
-    var identifier: String { get }
+    var identifier: UUID { get }
     
     /// Send a request to read value regardless `setNotifyValue` setting
     /// - Parameters:

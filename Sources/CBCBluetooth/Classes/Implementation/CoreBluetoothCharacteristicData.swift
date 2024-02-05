@@ -12,5 +12,5 @@ struct CoreBluetoothCharacteristicData: CBCCharacteristicData {
 
     let data: Data
     let peripheral: CBCPeripheral
-    let identifier: String
+    let identifier: UUID
 }

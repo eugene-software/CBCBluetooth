@@ -12,7 +12,7 @@ import Combine
 
 struct CoreBluetoothCharacteristic: CBCCharacteristic {
     
-    var identifier: String
+    var identifier: UUID
     
     private let characteristic: CBCharacteristic
     private let peripheral: CoreBluetoothPeripheral
@@ -20,7 +20,7 @@ struct CoreBluetoothCharacteristic: CBCCharacteristic {
     init(characteristic: CBCharacteristic, peripheral: CoreBluetoothPeripheral) {
         self.characteristic = characteristic
         self.peripheral = peripheral
-        self.identifier = characteristic.uuid.uuidString
+        self.identifier = UUID(uuidString: characteristic.uuid.uuidString)!
     }
     
     func readValue() -> AnyPublisher<CBCCharacteristicData, CBCError> {
