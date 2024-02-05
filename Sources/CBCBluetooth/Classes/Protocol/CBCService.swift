@@ -16,5 +16,5 @@ public protocol CBCService {
     ///   - uuids: UUID strings for particular characteristics
     /// - Returns: Publisher that passes found `CBCCharacteristic`
     ///
-    func discoverCharacteristics(with uuids: [UUID]?) -> AnyPublisher<CBCCharacteristic, CBCError>
+    func discoverCharacteristics(with uuids: [String]?) -> AnyPublisher<CBCCharacteristic, CBCError>
 }

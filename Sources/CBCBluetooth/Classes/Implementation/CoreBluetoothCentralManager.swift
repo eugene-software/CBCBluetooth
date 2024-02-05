@@ -66,9 +66,9 @@ extension CoreBluetoothCentralManager: CBCCentralManager {
         return centralManager.stopScan()
     }
     
-    func disconnectAllPeripherals(for services: [UUID]) {
+    func disconnectAllPeripherals(for services: [String]) {
         
-        let cbuuids: [CBUUID] = services.map { CBUUID(string: $0.uuidString) }
+        let cbuuids: [CBUUID] = services.map { CBUUID(string: $0) }
         let retrievedPeripherals = centralManager.retrieveConnectedPeripherals(withServices: cbuuids)
         retrievedPeripherals.forEach {
             self.centralManager.cancelPeripheralConnection($0)
@@ -81,17 +81,17 @@ extension CoreBluetoothCentralManager: CBCCentralManager {
         return convertToDTOPeripherals(from: retrievedPeripherals).eraseToAnyPublisher()
     }
     
-    func getConnectedPeripherals(with services: [UUID]) -> AnyPublisher<CBCPeripheral, CBCError> {
+    func getConnectedPeripherals(with services: [String]) -> AnyPublisher<CBCPeripheral, CBCError> {
         
-        let cbuuids: [CBUUID] = services.map { CBUUID(string: $0.uuidString) }
+        let cbuuids: [CBUUID] = services.map { CBUUID(string: $0) }
         
         let retrievedPeripherals = centralManager.retrieveConnectedPeripherals(withServices: cbuuids)
         return convertToDTOPeripherals(from: retrievedPeripherals).eraseToAnyPublisher()
     }
     
-    func startScan(with services: [UUID]?) -> AnyPublisher<CBCPeripheral, CBCError> {
+    func startScan(with services: [String]?) -> AnyPublisher<CBCPeripheral, CBCError> {
         
-        let cbuuids: [CBUUID] = services?.map { CBUUID(string: $0.uuidString) } ?? []
+        let cbuuids: [CBUUID] = services?.map { CBUUID(string: $0) } ?? []
         
         return waitUntilPoweredOn()
             .tryMap { [weak self] central -> CoreBluetoothCentralManager in

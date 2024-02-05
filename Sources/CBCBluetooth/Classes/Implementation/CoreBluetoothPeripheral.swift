@@ -115,12 +115,12 @@ extension CoreBluetoothPeripheral: CBCPeripheral {
             .eraseToAnyPublisher()
     }
     
-    func discoverServices(with uuids: [UUID]?) -> AnyPublisher<CBCService, CBCError> {
+    func discoverServices(with uuids: [String]?) -> AnyPublisher<CBCService, CBCError> {
         
         let subject = PassthroughSubject<CBCService, CBCError>()
-        let cbuuids: [CBUUID] = uuids?.map { CBUUID(string: $0.uuidString) } ?? []
+        let cbuuids: [CBUUID] = uuids?.map { CBUUID(string: $0) } ?? []
         
-        if let publisher = discoveredServicesPublisher(for: peripheral, with: cbuuids) {
+        if let publisher = discoveredServicesPublisher(for: peripheral, with: uuids) {
             return publisher
         }
 
@@ -163,13 +163,13 @@ extension CoreBluetoothPeripheral: CBCPeripheral {
 //
 extension CoreBluetoothPeripheral {
     
-    func discoverCharacteristics(with uuids: [UUID]?, for service: CBService) -> AnyPublisher<CBCCharacteristic, CBCError> {
+    func discoverCharacteristics(with uuids: [String]?, for service: CBService) -> AnyPublisher<CBCCharacteristic, CBCError> {
         
         let subject = PassthroughSubject<CBCCharacteristic, CBCError>()
         
-        let cbuuids: [CBUUID] = uuids?.map { CBUUID(string: $0.uuidString) } ?? []
+        let cbuuids: [CBUUID] = uuids?.map { CBUUID(string: $0) } ?? []
         
-        if let publisher = discoveredCharacteristicsPublisher(for: service, with: cbuuids) {
+        if let publisher = discoveredCharacteristicsPublisher(for: service, with: uuids) {
             return publisher
         }
         
@@ -282,11 +282,11 @@ extension CoreBluetoothPeripheral {
 //
 private extension CoreBluetoothPeripheral {
     
-    func discoveredCharacteristicsPublisher(for service: CBService, with uuids: [CBUUID]?) -> AnyPublisher<CBCCharacteristic, CBCError>? {
+    func discoveredCharacteristicsPublisher(for service: CBService, with uuids: [String]?) -> AnyPublisher<CBCCharacteristic, CBCError>? {
         
         guard let uuids = uuids else { return nil }
-        guard let existingCharacteristics = service.characteristics?.filter({ uuids.contains($0.uuid)}) else { return nil }
-        let existingUUIDsSet = Set(existingCharacteristics.map {$0.uuid })
+        guard let existingCharacteristics = service.characteristics?.filter({ uuids.contains($0.uuid.uuidString)}) else { return nil }
+        let existingUUIDsSet = Set(existingCharacteristics.map {$0.uuid.uuidString })
         let incomingUUIDSet = Set(uuids)
         
         if existingUUIDsSet == incomingUUIDSet {
@@ -298,11 +298,11 @@ private extension CoreBluetoothPeripheral {
         }
     }
     
-    func discoveredServicesPublisher(for peripheral: CBPeripheral, with uuids: [CBUUID]?) -> AnyPublisher<CBCService, CBCError>? {
+    func discoveredServicesPublisher(for peripheral: CBPeripheral, with uuids: [String]?) -> AnyPublisher<CBCService, CBCError>? {
         
         guard let uuids = uuids else { return nil }
-        guard let existingServices = peripheral.services?.filter({ uuids.contains($0.uuid)}) else { return nil }
-        let existingUUIDsSet = Set(existingServices.map {$0.uuid })
+        guard let existingServices = peripheral.services?.filter({ uuids.contains($0.uuid.uuidString)}) else { return nil }
+        let existingUUIDsSet = Set(existingServices.map {$0.uuid.uuidString })
         let incomingUUIDSet = Set(uuids)
         
         if existingUUIDsSet == incomingUUIDSet {
@@ -327,11 +327,7 @@ private extension CoreBluetoothPeripheral {
                 .tryMap {[weak self] filteredPeripheral -> CBCCharacteristicData in
                     guard let `self` = self else { throw CBCError.objectDeallocated }
                     guard let data = filteredPeripheral.characteristic.value else { throw CBCError.invalidData }
-                    return CoreBluetoothCharacteristicData(
-                        data: data,
-                        peripheral: self,
-                        identifier: UUID(uuidString: characteristic.uuid.uuidString)!
-                    )
+                    return CoreBluetoothCharacteristicData(data: data, peripheral: self, identifier: characteristic.uuid.uuidString)
                 }
                 .mapError { $0.cbcError }
                 .eraseToAnyPublisher()

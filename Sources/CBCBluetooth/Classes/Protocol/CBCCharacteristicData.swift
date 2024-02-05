@@ -16,7 +16,7 @@ public protocol CBCCharacteristicData {
     
     /// Characteristic UUID string
     ///
-    var identifier: UUID { get }
+    var identifier: String { get }
     
     /// Peripgeral that owns this characteristic
     ///
