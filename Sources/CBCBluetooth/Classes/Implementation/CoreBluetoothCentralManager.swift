@@ -38,8 +38,10 @@ final class CoreBluetoothCentralManager {
     private let centralManager: CBCentralManager
     private let delegate: CoreBluetoothdCentralManagerDelegate
     private var peripherals: [UUID: CoreBluetoothPeripheral] = [:]
-    private var cancellables: [AnyCancellable] = []
+    private var cancellables: Set<AnyCancellable> = .init()
     private var connectedPeripherals: [UUID: CoreBluetoothPeripheral] = [:]
+    
+    private let lock = NSLock()
     
     init() {
         self.delegate = CoreBluetoothdCentralManagerDelegate()
@@ -244,9 +246,15 @@ private extension CoreBluetoothCentralManager {
     }
     
     func safeSet(peripheral: CoreBluetoothPeripheral, for identifier: UUID) {
-        queue.async(flags: .barrier) { [weak self] in
-            self?.peripherals[identifier] = peripheral
-        }
+        
+        Just(())
+            .receive(on: queue)
+            .sink {[weak self] _ in
+                self?.lock.lock()
+                self?.peripherals[identifier] = peripheral
+                self?.lock.unlock()
+            }
+            .store(in: &cancellables)
     }
     
     func safeGetPeripheral(for identifier: UUID) -> CoreBluetoothPeripheral? {

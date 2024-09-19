@@ -8,9 +8,9 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CBCBluetooth'
-  s.version          = '1.0.5'
+  s.version          = '1.1.0'
   s.summary          = 'Combine wrapper over CoreBluetooth'
-  s.swift_version    = '5.0'
+  s.swift_version    = '6.0'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
