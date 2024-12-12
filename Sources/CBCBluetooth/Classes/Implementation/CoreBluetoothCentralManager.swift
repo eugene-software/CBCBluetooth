@@ -96,18 +96,20 @@ extension CoreBluetoothCentralManager: CBCCentralManager {
         }
     }
     
-    func getPeripherals(with identifiers: [UUID]) -> AnyPublisher<CBCPeripheral, CBCError> {
+    func getPeripherals(with identifiers: [UUID]) -> [CBCPeripheral] {
         
         let retrievedPeripherals = centralManager.retrievePeripherals(withIdentifiers: identifiers)
-        return convertToDTOPeripherals(from: retrievedPeripherals).eraseToAnyPublisher()
+        let peripherals = retrievedPeripherals.compactMap { self.provideDTOPeripheral(for: $0, centralManager: self) }
+        return peripherals
     }
     
-    func getConnectedPeripherals(with serviceIds: [String]) -> AnyPublisher<CBCPeripheral, CBCError> {
+    func getConnectedPeripherals(with serviceIds: [String]) -> [CBCPeripheral] {
         
         let cbuuids: [CBUUID] = serviceIds.map { CBUUID(string: $0) }
         
         let retrievedPeripherals = centralManager.retrieveConnectedPeripherals(withServices: cbuuids)
-        return convertToDTOPeripherals(from: retrievedPeripherals).eraseToAnyPublisher()
+        let peripherals = retrievedPeripherals.compactMap { self.provideDTOPeripheral(for: $0, centralManager: self) }
+        return peripherals
     }
     
     func startScan(with serviceIds: [String]?) -> AnyPublisher<CBCPeripheral, CBCError> {

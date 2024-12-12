@@ -94,16 +94,16 @@ public protocol CBCCentralManager {
     /// Returns all cached peripherals with particular UUIDs
     /// - Parameters:
     ///   - uuids: UUIDs of peripherals
-    /// - Returns: Publisher that passes found `CBCPeripheral`
+    /// - Returns: found `CBCPeripheral` objects
     ///
-    func getPeripherals(with uuids: [UUID]) -> AnyPublisher<CBCPeripheral, CBCError>
+    func getPeripherals(with uuids: [UUID]) -> [CBCPeripheral]
     
     /// Returns connected by iOS system cached peripherals with particular UUIDs
     /// - Parameters:
     ///   - serviceIds: IDs of services to filter
-    /// - Returns: Publisher that passes found `CBCPeripheral`
+    /// - Returns: found `CBCPeripheral` objects
     ///
-    func getConnectedPeripherals(with serviceIds: [String]) -> AnyPublisher<CBCPeripheral, CBCError>
+    func getConnectedPeripherals(with serviceIds: [String]) -> [CBCPeripheral]
     
     /// When application launches, it can restore connection of peripherals by itself, and the app can handle them by this methhod
     /// - Parameters:
