@@ -139,7 +139,7 @@ extension CoreBluetoothCentralManager: CBCCentralManager {
             }
             .compactMap {[weak self] peripheral in
                 guard let `self` = self else { return nil }
-                return CoreBluetoothPeripheral(peripheral: peripheral, centralManager: self)
+                return provideDTOPeripheral(for: peripheral, centralManager: self)
             }
             .eraseToAnyPublisher()
     }
@@ -252,15 +252,19 @@ private extension CoreBluetoothCentralManager {
         Just(())
             .receive(on: queue)
             .sink {[weak self] _ in
-                self?.lock.lock()
-                self?.peripherals[identifier] = peripheral
-                self?.lock.unlock()
+                self?.lock.withLock {
+                    self?.peripherals[identifier] = peripheral
+                }
             }
             .store(in: &cancellables)
     }
     
     func safeGetPeripheral(for identifier: UUID) -> CoreBluetoothPeripheral? {
-        return queue.sync { peripherals[identifier] }
+        return queue.sync {
+            lock.withLock {
+                peripherals[identifier]
+            }
+        }
     }
     
     func waitUntilPoweredOn() -> AnyPublisher<Void, CBCError> {

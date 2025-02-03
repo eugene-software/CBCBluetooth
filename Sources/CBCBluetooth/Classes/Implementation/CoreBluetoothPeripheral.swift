@@ -30,7 +30,7 @@ import CoreBluetooth
 
 final class CoreBluetoothPeripheral {
     
-    var connectionState: CurrentValueSubject<Bool, CBCError> = CurrentValueSubject(false)
+    var connectionState: CurrentValueSubject<Bool, CBCError>
     var peripheral: CBPeripheral
     var rssi: NSNumber?
     
@@ -46,6 +46,7 @@ final class CoreBluetoothPeripheral {
         self.peripheral = peripheral
         self.delegate = CoreBluetoothPeripheralDelegate()
         self.peripheral.delegate = delegate
+        self.connectionState = CurrentValueSubject(peripheral.state == .connected)
         self.centralManager = centralManager
     }
 }
