@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'CBCBluetooth'
-  s.version          = '1.1.3'
+  s.version          = '1.1.4'
   s.summary          = 'Combine wrapper over CoreBluetooth'
   s.swift_version    = '6.0'
 
